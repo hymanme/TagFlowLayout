@@ -1,6 +1,6 @@
 # TagFlowLayout
 
-![tagFlowLayout1](http://ww2.sinaimg.cn/mw690/005X6W83jw1f7j44gjx2ng308w0dcx6w.gif)
+[GIF图演示，请戳我](http://ww2.sinaimg.cn/mw690/005X6W83jw1f7j44gjx2ng308w0dcx6w.gif)
 
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
