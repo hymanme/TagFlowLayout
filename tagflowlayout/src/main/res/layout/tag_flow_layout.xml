@@ -70,6 +70,5 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
-
     </LinearLayout>
 </merge>

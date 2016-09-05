@@ -10,7 +10,7 @@ import android.view.View;
  * Description:
  */
 public interface OnTagClickListener {
-    void onClick(View view, int position, String name);
+    void onClick(TagFlowLayout parent, View view, int position);
 
-    void onLongClick(View view, int position, String name);
+    void onLongClick(TagFlowLayout parent, View view, int position);
 }
