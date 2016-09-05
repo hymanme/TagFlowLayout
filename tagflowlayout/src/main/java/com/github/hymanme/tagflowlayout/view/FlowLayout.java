@@ -12,9 +12,8 @@ public class FlowLayout extends ViewGroup {
 
     // 记录当前有多少行
     private List<Line> mLines = new ArrayList<Line>();
-    private Line mCurrentLine;
     private int horizontalSpace = 15;
-    private int verticalSpace   = 20;
+    private int verticalSpace = 20;
 
 
     public void setSpace(int horizontalSpace, int verticalSpace) {
@@ -35,7 +34,7 @@ public class FlowLayout extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // 清空
         mLines.clear();
-        mCurrentLine = null;
+        Line mCurrentLine = null;
 
         // 获得容器的宽度
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -121,6 +120,11 @@ public class FlowLayout extends ViewGroup {
             }
         }
 
+    }
+
+    public void clearAllView() {
+        mLines = new ArrayList<>();
+        this.invalidate();
     }
 
     private class Line {

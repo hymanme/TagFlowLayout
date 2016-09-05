@@ -3,27 +3,24 @@ package com.github.hymanme.tagflowlayout;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
+import android.support.annotation.ColorInt;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
-import android.view.Gravity;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.hymanme.tagflowlayout.bean.TagBean;
 import com.github.hymanme.tagflowlayout.utils.DensityUtils;
 import com.github.hymanme.tagflowlayout.view.FlowLayout;
 import com.github.hymanme.tagflowlayout.view.HScrollView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * /**
@@ -32,32 +29,21 @@ import java.util.List;
  * Create at 2016/9/4
  * Description:可折叠和展开的标签控件
  */
-public class TagFlowLayout extends LinearLayout {
+public class TagFlowLayout extends NestedScrollView {
     //默认最小最大布局高度，单位dp
     private static final float DEFAULT_MIN_LAYOUT_HEIGHT = 90;
     private static final float DEFAULT_MAX_LAYOUT_HEIGHT = 200;
     //默认标签之间的间距
     private static final float DEFAULT_TAGS_SPACE = 12;
-    //默认标签内间距
-    private static final float DEFAULT_TAG_PADDING = 5;
-    //默认标签背景圆角大小
-    private static final float DEFAULT_TAG_CORNER = 3;
     //默认控件背景颜色
     private static final int DEFAULT_LAYOUT_BACKGROUND_COLOR = 0Xdef2f2f2;
     //默认标题颜色
     private static final int DEFAULT_TITLE_TEXT_COLOR = 0XFF727272;
-    //默认标签字体颜色
-    private static final int DEFAULT_TAG_TEXT_COLOR = 0XFF727272;
     //默认展开收回提示字体颜色
     private static final int DEFAULT_HINT_TEXT_COLOR = 0Xde000000;
     //默认分割线颜色
     private static final int DEFAULT_DIVIDER_COLOR = 0X1f000000;
-    //默认标签背景正常颜色
-    private static final int DEFAULT_TAG_BACKGROUND_COLOR = 0XFFFFFFFF;
-    //默认标签背景按下颜色
-    private static final int DEFAULT_TAG_BACKGROUND_PRESSED_COLOR = 0XFF97445C;
     public static final int DEFAULT_TITLE_TEXT_SIZE = 14;
-    public static final int DEFAULT_TAG_TEXT_SIZE = 14;
     public static final int DEFAULT_HINT_TEXT_SIZE = 12;
     //默认展开动画执行时间(毫秒)
     private static final int DEFAULT_ANIMATION_DURATION = 400;
@@ -93,26 +79,16 @@ public class TagFlowLayout extends LinearLayout {
     private String expandHint;
     //标题文字颜色
     private int titleTextColor;
-    //标签文字颜色
-    private int tagsTextColor;
     //控件背景颜色
     private int backGroundColor;
-    //标签正常背景颜色
-    private int tagsBackgroundColor;
-    //标签不正常(按下)背景颜色
-    private int tagsBackgroundPressedColor;
     //查看更多文字颜色
     private int hintTextColor;
     //分割线颜色
     private int dividerColor;
-    //标签背景圆角度数
-    private float tagsBackgroundCorners;
     //标签之间的横向间距
     private int tagsHorizontalSpace;
     //标签之间的纵向间距
     private int tagsVerticalSpace;
-    //是否随机设置各个标签的背景颜色(设置true之后手动设置背景颜色将无效)
-    private boolean randomBackground;
     //查看更多前面显示的小图标
     private Drawable indicateImage;
     //内容区域最少显示高度(px)
@@ -121,15 +97,16 @@ public class TagFlowLayout extends LinearLayout {
     private int maxVisibleHeight;
     //标题字体大小
     private float titleTextSize;
-    //标签字体大小
-    private float tagsTextSize;
     //提示字体大小
     private float hintTextSize;
     //展开和折叠动画持续时间
     private int animationDuration;
 
-    //标签文本数据
-    private List<TagBean> tagBeans;
+    //点击监听事件
+    private OnTagClickListener mListener;
+    private AdapterDataSetObserver mDataSetObserver;
+    private TagAdapter mTagAdapter;
+    private FlowLayout mLayout;
 
     public TagFlowLayout(Context context) {
         this(context, null);
@@ -142,7 +119,7 @@ public class TagFlowLayout extends LinearLayout {
     public TagFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
-        setOrientation(VERTICAL);
+//        setOrientation(VERTICAL);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TagFlowLayout);
         title = a.getString(R.styleable.TagFlowLayout_titleText);
         foldHint = a.getString(R.styleable.TagFlowLayout_foldHint);
@@ -150,20 +127,14 @@ public class TagFlowLayout extends LinearLayout {
 
         backGroundColor = a.getColor(R.styleable.TagFlowLayout_backGroundColor, DEFAULT_LAYOUT_BACKGROUND_COLOR);
         titleTextColor = a.getColor(R.styleable.TagFlowLayout_textTitleColor, DEFAULT_TITLE_TEXT_COLOR);
-        tagsTextColor = a.getColor(R.styleable.TagFlowLayout_tagsTextColor, DEFAULT_TAG_TEXT_COLOR);
-        tagsBackgroundColor = a.getColor(R.styleable.TagFlowLayout_tagsBackgroundColor, DEFAULT_TAG_BACKGROUND_COLOR);
-        tagsBackgroundPressedColor = a.getColor(R.styleable.TagFlowLayout_tagsBackgroundPressedColor, DEFAULT_TAG_BACKGROUND_PRESSED_COLOR);
         hintTextColor = a.getColor(R.styleable.TagFlowLayout_hintTextColor, DEFAULT_HINT_TEXT_COLOR);
         dividerColor = a.getColor(R.styleable.TagFlowLayout_dividerColor, DEFAULT_DIVIDER_COLOR);
         minVisibleHeight = (int) a.getDimension(R.styleable.TagFlowLayout_minVisibleHeight, DensityUtils.dp2px(mContext, DEFAULT_MIN_LAYOUT_HEIGHT));
         maxVisibleHeight = (int) a.getDimension(R.styleable.TagFlowLayout_maxVisibleHeight, DensityUtils.dp2px(mContext, DEFAULT_MAX_LAYOUT_HEIGHT));
-        tagsBackgroundCorners = a.getDimension(R.styleable.TagFlowLayout_tagsBackgroundCorners, DensityUtils.dp2px(mContext, DEFAULT_TAG_CORNER));
         tagsHorizontalSpace = (int) a.getDimension(R.styleable.TagFlowLayout_tagsHorizontalSpace, DensityUtils.dp2px(mContext, DEFAULT_TAGS_SPACE));
         tagsVerticalSpace = (int) a.getDimension(R.styleable.TagFlowLayout_tagsVerticalSpace, DensityUtils.dp2px(mContext, DEFAULT_TAGS_SPACE));
-        randomBackground = a.getBoolean(R.styleable.TagFlowLayout_randomBackground, false);
         indicateImage = a.getDrawable(R.styleable.TagFlowLayout_indicateImage);
         titleTextSize = a.getDimension(R.styleable.TagFlowLayout_titleTextSize, DensityUtils.sp2px(mContext, DEFAULT_TITLE_TEXT_SIZE));
-        tagsTextSize = a.getDimension(R.styleable.TagFlowLayout_tagsTextSize, DensityUtils.sp2px(mContext, DEFAULT_TAG_TEXT_SIZE));
         hintTextSize = a.getDimension(R.styleable.TagFlowLayout_hintTextSize, DensityUtils.sp2px(mContext, DEFAULT_HINT_TEXT_SIZE));
         animationDuration = a.getInt(R.styleable.TagFlowLayout_animationDuration, DEFAULT_ANIMATION_DURATION);
         a.recycle();
@@ -204,50 +175,14 @@ public class TagFlowLayout extends LinearLayout {
     }
 
     private void init() {
-        FlowLayout mLayout = new FlowLayout(mContext);
+        mLayout = new FlowLayout(mContext);
         hsv_tag_content.removeAllViews();
         hsv_tag_content.addView(mLayout);
-        tagBeans = new ArrayList<>();
-        for (int i = 0; i < 60; i++) {
-            tagBeans.add(new TagBean(i, "tag" + i));
-        }
+
         ViewGroup.LayoutParams layoutParams = hsv_tag_content.getLayoutParams();
         layoutParams.height = minVisibleHeight;
         hsv_tag_content.setLayoutParams(layoutParams);
         mLayout.setSpace(tagsHorizontalSpace, tagsVerticalSpace);
-        if (tagBeans == null) {
-            return;
-        }
-        for (int i = 0; i < tagBeans.size(); i++) {
-            TagBean tagBean = tagBeans.get(i);
-            final TextView tv = new TextView(mContext);
-            tv.setText(tagBean.getName());
-            tagBean.setTag(tv);
-            int padding = DensityUtils.dp2px(mContext, DEFAULT_TAG_PADDING);
-            tv.setPadding(padding, padding, padding, padding);
-            tv.setGravity(Gravity.CENTER);
-            //设置字体颜色的选择器
-            ColorStateList colorSateList = mContext.getResources().getColorStateList(R.color.secondary_text);
-//            ColorStateList colorSateList = new ColorStateList(new int[][]{}, new int[]{tagsTextColor});
-            tv.setTextColor(colorSateList);
-
-            GradientDrawable normal = new GradientDrawable();
-            normal.setShape(GradientDrawable.RECTANGLE);
-            normal.setCornerRadius(tagsBackgroundCorners);
-            normal.setColor(tagsBackgroundColor);
-
-            GradientDrawable pressed = new GradientDrawable();
-            pressed.setShape(GradientDrawable.RECTANGLE);
-            pressed.setCornerRadius(tagsBackgroundCorners);
-            pressed.setColor(tagsBackgroundPressedColor);
-
-            StateListDrawable selector = new StateListDrawable();
-            selector.addState(new int[]{android.R.attr.state_pressed}, pressed);
-            selector.addState(new int[]{}, normal);
-            tv.setBackgroundDrawable(selector);
-
-            mLayout.addView(tv);
-        }
     }
 
     private void animate(int start, int end) {
@@ -262,7 +197,49 @@ public class TagFlowLayout extends LinearLayout {
                 hsv_tag_content.setLayoutParams(layoutParams);
             }
         });
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.start();
+    }
+
+    private void reloadData() {
+        mLayout.clearAllView();
+        for (int i = 0; i < mTagAdapter.getCount(); i++) {
+            final View view = mTagAdapter.getView(i, null, mLayout);
+            final int j = i;
+            if (mListener != null) {
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onClick(TagFlowLayout.this, v, j);
+                    }
+                });
+                view.setOnLongClickListener(new OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        mListener.onLongClick(TagFlowLayout.this, v, j);
+                        return true;
+                    }
+                });
+            }
+            mLayout.addView(view);
+        }
+    }
+
+    public TagAdapter getTagAdapter() {
+        return mTagAdapter;
+    }
+
+    public void setTagAdapter(TagAdapter mTagAdapter) {
+        if (mTagAdapter != null && mDataSetObserver != null) {
+            this.mTagAdapter.unregisterDataSetObserver(mDataSetObserver);
+        }
+
+        this.mTagAdapter = mTagAdapter;
+        if (this.mTagAdapter != null) {
+            mDataSetObserver = new AdapterDataSetObserver();
+            this.mTagAdapter.registerDataSetObserver(mDataSetObserver);
+            reloadData();
+        }
     }
 
     public String getTitle() {
@@ -300,48 +277,24 @@ public class TagFlowLayout extends LinearLayout {
         return titleTextColor;
     }
 
-    public void setTitleTextColor(int titleTextColor) {
+    public void setTitleTextColor(@ColorInt int titleTextColor) {
         this.titleTextColor = titleTextColor;
         this.tv_title.setTextColor(titleTextColor);
-    }
-
-    public int getTagsTextColor() {
-        return tagsTextColor;
-    }
-
-    public void setTagsTextColor(int tagsTextColor) {
-        this.tagsTextColor = tagsTextColor;
     }
 
     public int getBackGroundColor() {
         return backGroundColor;
     }
 
-    public void setBackGroundColor(int backGroundColor) {
+    public void setBackGroundColor(@ColorInt int backGroundColor) {
         this.backGroundColor = backGroundColor;
-    }
-
-    public int getTagsBackgroundColor() {
-        return tagsBackgroundColor;
-    }
-
-    public void setTagsBackgroundColor(int tagsBackgroundColor) {
-        this.tagsBackgroundColor = tagsBackgroundColor;
-    }
-
-    public int getTagsBackgroundPressedColor() {
-        return tagsBackgroundPressedColor;
-    }
-
-    public void setTagsBackgroundPressedColor(int tagsBackgroundPressedColor) {
-        this.tagsBackgroundPressedColor = tagsBackgroundPressedColor;
     }
 
     public int getHintTextColor() {
         return hintTextColor;
     }
 
-    public void setHintTextColor(int hintTextColor) {
+    public void setHintTextColor(@ColorInt int hintTextColor) {
         this.hintTextColor = hintTextColor;
         this.tv_more_hint.setTextColor(hintTextColor);
     }
@@ -350,17 +303,9 @@ public class TagFlowLayout extends LinearLayout {
         return dividerColor;
     }
 
-    public void setDividerColor(int dividerColor) {
+    public void setDividerColor(@ColorInt int dividerColor) {
         this.dividerColor = dividerColor;
         this.divider.setBackgroundColor(dividerColor);
-    }
-
-    public float getTagsBackgroundCorners() {
-        return tagsBackgroundCorners;
-    }
-
-    public void setTagsBackgroundCorners(float tagsBackgroundCorners) {
-        this.tagsBackgroundCorners = tagsBackgroundCorners;
     }
 
     public int getTagsHorizontalSpace() {
@@ -379,14 +324,6 @@ public class TagFlowLayout extends LinearLayout {
         this.tagsVerticalSpace = tagsVerticalSpace;
     }
 
-    public boolean isRandomBackground() {
-        return randomBackground;
-    }
-
-    public void setRandomBackground(boolean randomBackground) {
-        this.randomBackground = randomBackground;
-    }
-
     public Drawable getIndicateImage() {
         return indicateImage;
     }
@@ -400,10 +337,11 @@ public class TagFlowLayout extends LinearLayout {
     }
 
     public void setMinVisibleHeight(int minVisibleHeight) {
-        if (isFolded) {
-            animate(this.minVisibleHeight, minVisibleHeight);
+        int minPx = DensityUtils.dp2px(mContext, minVisibleHeight);
+        if (!isFolded) {
+            animate(this.minVisibleHeight, minPx);
         }
-        this.minVisibleHeight = minVisibleHeight;
+        this.minVisibleHeight = minPx;
     }
 
     public int getMaxVisibleHeight() {
@@ -411,10 +349,11 @@ public class TagFlowLayout extends LinearLayout {
     }
 
     public void setMaxVisibleHeight(int maxVisibleHeight) {
-        if (!isFolded) {
-            animate(this.maxVisibleHeight, maxVisibleHeight);
+        int maxPx = DensityUtils.dp2px(mContext, maxVisibleHeight);
+        if (isFolded) {
+            animate(this.maxVisibleHeight, maxPx);
         }
-        this.maxVisibleHeight = maxVisibleHeight;
+        this.maxVisibleHeight = maxPx;
     }
 
     public float getTitleTextSize() {
@@ -428,15 +367,7 @@ public class TagFlowLayout extends LinearLayout {
      */
     public void setTitleTextSize(float titleTextSize) {
         this.titleTextSize = DensityUtils.sp2px(mContext, titleTextSize);
-        this.tv_title.setTextSize(this.titleTextSize);
-    }
-
-    public float getTagsTextSize() {
-        return tagsTextSize;
-    }
-
-    public void setTagsTextSize(float tagsTextSize) {
-        this.tagsTextSize = DensityUtils.sp2px(mContext, tagsTextSize);
+        this.tv_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, this.titleTextSize);
     }
 
     public float getHintTextSize() {
@@ -445,7 +376,7 @@ public class TagFlowLayout extends LinearLayout {
 
     public void setHintTextSize(float hintTextSize) {
         this.hintTextSize = DensityUtils.sp2px(mContext, hintTextSize);
-        this.tv_more_hint.setTextSize(this.hintTextSize);
+        this.tv_more_hint.setTextSize(TypedValue.COMPLEX_UNIT_PX, this.hintTextSize);
     }
 
     public int getAnimationDuration() {
@@ -456,12 +387,15 @@ public class TagFlowLayout extends LinearLayout {
         this.animationDuration = animationDuration;
     }
 
-    public List<TagBean> getTagBeans() {
-        return tagBeans;
+    public OnTagClickListener getTagListener() {
+        return mListener;
     }
 
-    public void setTagBeans(List<TagBean> tagBeans) {
-        this.tagBeans = tagBeans;
+    public void setTagListener(OnTagClickListener mListener) {
+        this.mListener = mListener;
+        if (mTagAdapter != null) {
+            reloadData();
+        }
     }
 
     public boolean isCanScroll() {
@@ -470,5 +404,18 @@ public class TagFlowLayout extends LinearLayout {
 
     public void setCanScroll(boolean can) {
         hsv_tag_content.setCanScroll(can);
+    }
+
+    class AdapterDataSetObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            reloadData();
+        }
+
+        @Override
+        public void onInvalidated() {
+            super.onInvalidated();
+        }
     }
 }

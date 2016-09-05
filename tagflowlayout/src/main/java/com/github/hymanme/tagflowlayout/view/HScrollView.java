@@ -1,9 +1,9 @@
 package com.github.hymanme.tagflowlayout.view;
 
 import android.content.Context;
-import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.ScrollView;
 
 /**
  * Author   :hymanme
@@ -11,7 +11,7 @@ import android.view.MotionEvent;
  * Create at 2016/2/3 0003
  * Description:
  */
-public class HScrollView extends NestedScrollView {
+public class HScrollView extends ScrollView {
 
     public HScrollView(Context context) {
         super(context);
@@ -35,7 +35,6 @@ public class HScrollView extends NestedScrollView {
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (canScroll) {
             getParent().requestDisallowInterceptTouchEvent(true);
-
         }
         return super.dispatchTouchEvent(event);
     }
@@ -44,7 +43,7 @@ public class HScrollView extends NestedScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
 //        if (t <= 0 & oldt > 0) {
 //            canScroll = false;
-//        } else if (t > 0 && oldt < t) {
+//        } else if (t > 0 && oldt < 0) {
 //            canScroll = true;
 //        }
         super.onScrollChanged(l, t, oldl, oldt);
