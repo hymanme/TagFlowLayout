@@ -8,15 +8,15 @@
 please wait...
 
 #### 1. 定义xml布局
-    ```Java 
-        <com.github.hymanme.tagflowlayout.TagFlowLayout
-            android:id="@+id/tag_flow_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:expandHint="查看更多"
-            app:foldHint="点击缩回">
-    ```
+```Java 
+    <com.github.hymanme.tagflowlayout.TagFlowLayout
+        android:id="@+id/tag_flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:expandHint="查看更多"
+        app:foldHint="点击缩回">
+```
 
 #### 2. 初始化
 
