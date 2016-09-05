@@ -95,7 +95,7 @@ public class TagFlowLayout extends NestedScrollView {
     private int minVisibleHeight;
     //内容区域最大显示高度
     private int maxVisibleHeight;
-    //标题字体大小
+    //标题字体大小(单位sp)
     private float titleTextSize;
     //提示字体大小
     private float hintTextSize;
