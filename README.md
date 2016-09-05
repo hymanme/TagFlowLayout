@@ -5,7 +5,7 @@
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
 #How to use
-please wait...
+jcent please wait...
 
 #### 1. 定义xml布局
 ```Java 
@@ -25,10 +25,14 @@ please wait...
      mTagFlowLayout.setTitle("大家都不想搜");
      mTagFlowLayout.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark)
      mTagFlowLayout.setTitleTextSize(12);
+     //最小显示高度(单位dp)
      mTagFlowLayout.setMinVisibleHeight(100);
+     //最大显示高度(单位dp)
      mTagFlowLayout.setMaxVisibleHeight(400);
      mTagFlowLayout.setAnimationDuration(600);
+     //每一个标签的圆角角度
      mTagFlowLayout.setBackGroundColor(getResources().getColor(R.color.primary_text));
+     //scollview内容是否可以上下滑动
      mTagFlowLayout.setCanScroll(canScroll = !canScroll);
 ```
 
@@ -49,6 +53,8 @@ please wait...
     //设置adapter
     MyTagAdapter tagAdapter = new MyTagAdapter();
     mTagFlowLayout.setTagAdapter(tagAdapter);
+    //给adapter绑定数据
+    tagAdapter.addAllTags(tagBeans);
     //自定义Adapter：MyTagAdapter，其中TagBean为泛型类，即每一个tag的实体类
     //在getView()里面自定义tag标签的样式
     //默认提供了两个实例tag：DefaultTagView，ColorfulTagView
