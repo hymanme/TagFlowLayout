@@ -4,7 +4,7 @@
 
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
-#How to use
+##How to use
 Add this to your build.gradle:
 
 ```Java
@@ -78,7 +78,7 @@ Add this to your build.gradle:
         }
     }
 ```
-####默认tag样式
+##默认tag样式
 
 1. DefaultTagView (默认实心tag)
 2. ColorfulTagView (彩色背景实心tag)
@@ -89,7 +89,7 @@ Add this to your build.gradle:
 
 ![muti_tags](http://ww3.sinaimg.cn/mw690/005X6W83gw1f7jtynocg0j30ba0d0abz.jpg)
 
-####可选项(部分属性可直接在xml布局中指定)
+##可选项(部分属性可直接在xml布局中指定)
 
     //标题
     private String title;
