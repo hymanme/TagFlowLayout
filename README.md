@@ -85,6 +85,8 @@ Add this to your build.gradle:
 3. StrokeTagView	（空心带边框的tag）
 4. ColorfulStrokeTagView （空心彩色边框tag）
 5. 自定义tag，继承以上tag或者自定义View
+
+
 ![muti_tags](http://ww3.sinaimg.cn/mw690/005X6W83gw1f7jtynocg0j30ba0d0abz.jpg)
 
 ####可选项(部分属性可直接在xml布局中指定)
