@@ -5,7 +5,7 @@
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
 #How to use
-jcent please wait...
+jcenter please wait...
 
 #### 1. 定义xml布局
 ```Java 
