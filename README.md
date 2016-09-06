@@ -5,13 +5,7 @@
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
 ##How to use
-Add this to your build.gradle:
-
-```Java
-	dependencies {
-	  compile 'com.github.hymanme:tagflowlayout:0.1.0'
-	}
-```
+jcenter... wait
 
 #### 1. 定义xml布局
 ```Java 
