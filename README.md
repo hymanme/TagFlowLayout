@@ -30,7 +30,7 @@ jcent please wait...
      //最大显示高度(单位dp)
      mTagFlowLayout.setMaxVisibleHeight(400);
      mTagFlowLayout.setAnimationDuration(600);
-     //每一个标签的圆角角度
+     //设置背景颜色
      mTagFlowLayout.setBackGroundColor(getResources().getColor(R.color.primary_text));
      //scollview内容是否可以上下滑动
      mTagFlowLayout.setCanScroll(canScroll = !canScroll);
