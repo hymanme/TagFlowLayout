@@ -5,7 +5,12 @@
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
 ##How to use
-jcenter... wait
+Add this to your build.gradle:
+```Java
+	dependencies {
+	  compile 'com.github.hymanme:tagflowlayout:0.2.0'
+	}
+```
 
 #### 1. 定义xml布局
 ```Java 
@@ -50,11 +55,14 @@ jcenter... wait
                 Toast.makeText(MainActivity.this, "long click==" + ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
             }
         });
+
     //设置adapter
     MyTagAdapter tagAdapter = new MyTagAdapter();
     mTagFlowLayout.setTagAdapter(tagAdapter);
+
     //给adapter绑定数据
     tagAdapter.addAllTags(tagBeans);
+
     //自定义Adapter：MyTagAdapter，其中TagBean为泛型类，即每一个tag的实体类
     //在getView()里面自定义tag标签的样式
     //默认提供了两个实例tag：DefaultTagView，ColorfulTagView
