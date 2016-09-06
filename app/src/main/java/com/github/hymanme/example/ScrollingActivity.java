@@ -14,8 +14,8 @@ import com.github.hymanme.tagflowlayout.OnTagClickListener;
 import com.github.hymanme.tagflowlayout.TagAdapter;
 import com.github.hymanme.tagflowlayout.TagFlowLayout;
 import com.github.hymanme.tagflowlayout.bean.TagBean;
-import com.github.hymanme.tagflowlayout.view.ColorfulTagView;
-import com.github.hymanme.tagflowlayout.view.DefaultTagView;
+import com.github.hymanme.tagflowlayout.tags.ColorfulTagView;
+import com.github.hymanme.tagflowlayout.tags.DefaultTagView;
 
 import java.util.ArrayList;
 import java.util.List;

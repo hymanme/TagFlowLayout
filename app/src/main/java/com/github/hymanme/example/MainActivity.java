@@ -18,8 +18,8 @@ import com.github.hymanme.tagflowlayout.OnTagClickListener;
 import com.github.hymanme.tagflowlayout.TagAdapter;
 import com.github.hymanme.tagflowlayout.TagFlowLayout;
 import com.github.hymanme.tagflowlayout.bean.TagBean;
-import com.github.hymanme.tagflowlayout.view.ColorfulTagView;
-import com.github.hymanme.tagflowlayout.view.DefaultTagView;
+import com.github.hymanme.tagflowlayout.tags.ColorfulStrokeTagView;
+import com.github.hymanme.tagflowlayout.tags.DefaultTagView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            DefaultTagView textView = new ColorfulTagView(MainActivity.this);
+            DefaultTagView textView = new ColorfulStrokeTagView(MainActivity.this);
             textView.setText(((TagBean) getItem(position)).getName());
             return textView;
         }

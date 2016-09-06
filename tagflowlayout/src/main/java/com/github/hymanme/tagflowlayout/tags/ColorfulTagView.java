@@ -1,4 +1,4 @@
-package com.github.hymanme.tagflowlayout.view;
+package com.github.hymanme.tagflowlayout.tags;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -27,7 +27,7 @@ public class ColorfulTagView extends DefaultTagView {
     }
 
     @Override
-    protected int getNormalColor() {
+    protected int getNormalBackgroundColor() {
         Random random = new Random();
         int red = random.nextInt(200) + 50;
         int green = random.nextInt(200) + 50;

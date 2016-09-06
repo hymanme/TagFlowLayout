@@ -5,7 +5,13 @@
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
 #How to use
-jcenter please wait...
+Add this to your build.gradle:
+
+```Java
+	dependencies {
+	  compile 'com.github.hymanme:tagflowlayout:0.1.0'
+	}
+```
 
 #### 1. 定义xml布局
 ```Java 
@@ -65,12 +71,21 @@ jcenter please wait...
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+			//定制tag的样式，包括背景颜色，点击时背景颜色，背景形状等
             DefaultTagView textView = new ColorfulTagView(MainActivity.this);
             textView.setText(((TagBean) getItem(position)).getName());
             return textView;
         }
     }
 ```
+####默认tag样式
+
+1. DefaultTagView (默认实心tag)
+2. ColorfulTagView (彩色背景实心tag)
+3. StrokeTagView	（空心带边框的tag）
+4. ColorfulStrokeTagView （空心彩色边框tag）
+5. 自定义tag，继承以上tag或者自定义View
+![muti_tags](http://ww3.sinaimg.cn/mw690/005X6W83gw1f7jtynocg0j30ba0d0abz.jpg)
 
 ####可选项(部分属性可直接在xml布局中指定)
 
