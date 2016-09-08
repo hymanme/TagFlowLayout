@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.github.hymanme.tagflowlayout.utils.DensityUtils;
 import com.github.hymanme.tagflowlayout.view.FlowLayout;
-import com.github.hymanme.tagflowlayout.view.HScrollView;
+import com.github.hymanme.tagflowlayout.view.MyNestedScrollView;
 
 /**
  * /**
@@ -54,7 +54,7 @@ public class TagFlowLayout extends NestedScrollView {
     //标题
     private TextView tv_title;
     //标签容器
-    private HScrollView hsv_tag_content;
+    private MyNestedScrollView hsv_tag_content;
     //点击展开收回的容器
     private RelativeLayout rl_show_more;
     //分割线
@@ -146,7 +146,7 @@ public class TagFlowLayout extends NestedScrollView {
         View.inflate(mContext, R.layout.tag_flow_layout, this);
         ll_tag_layout = (LinearLayout) findViewById(R.id.ll_tag_layout);
         tv_title = (TextView) findViewById(R.id.tv_title);
-        hsv_tag_content = (HScrollView) findViewById(R.id.hsv_tag_content);
+        hsv_tag_content = (MyNestedScrollView) findViewById(R.id.hsv_tag_content);
         rl_show_more = (RelativeLayout) findViewById(R.id.rl_show_more);
         divider = findViewById(R.id.divider);
         ll_hint_layout = (LinearLayout) findViewById(R.id.ll_hint_layout);

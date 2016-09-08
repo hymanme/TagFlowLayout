@@ -24,7 +24,7 @@
             android:textColor="@color/secondary_text"
             android:textSize="14sp" />
 
-        <com.github.hymanme.tagflowlayout.view.HScrollView
+        <com.github.hymanme.tagflowlayout.view.MyNestedScrollView
             android:id="@+id/hsv_tag_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -5,7 +5,13 @@
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
 
 ##How to use
-wait...
+Add this to your build.gradle:
+
+```Java
+	dependencies {
+		compile 'com.github.hymanme.tagflowlayout:tagflowlayout:0.2.0'
+	}
+```
 
 #### 1. 定义xml布局
 ```Java 
@@ -33,7 +39,7 @@ wait...
      //设置背景颜色
      mTagFlowLayout.setBackGroundColor(getResources().getColor(R.color.primary_text));
      //scollview内容是否可以上下滑动
-     mTagFlowLayout.setCanScroll(canScroll = !canScroll);
+     ``mTagFlowLayout.setCanScroll(canScroll = !canScroll);``
 ```
 
 #### 3. 设置adapter和监听，最好先设置监听后设置adapter
