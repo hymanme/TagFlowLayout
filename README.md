@@ -39,7 +39,7 @@ Add this to your build.gradle:
      //设置背景颜色
      mTagFlowLayout.setBackGroundColor(getResources().getColor(R.color.primary_text));
      //scollview内容是否可以上下滑动
-     ``mTagFlowLayout.setCanScroll(canScroll = !canScroll);``
+     ~~mTagFlowLayout.setCanScroll(canScroll = !canScroll);~~
 ```
 
 #### 3. 设置adapter和监听，最好先设置监听后设置adapter
