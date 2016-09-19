@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@color/tag_layout_bg"
         android:orientation="vertical"
         android:paddingBottom="8dp"
         android:paddingLeft="16dp"
@@ -21,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="@string/you_may_search"
-            android:textColor="@color/secondary_text"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp" />
 
         <com.github.hymanme.tagflowlayout.view.MyNestedScrollView
@@ -49,7 +48,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="@color/tag_layout_bg"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -66,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="查看更多"
-                    android:textColor="@color/primary_text"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>

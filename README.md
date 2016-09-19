@@ -9,7 +9,7 @@ Add this to your build.gradle:
 
 ```Java
 	dependencies {
-		compile 'com.github.hymanme.tagflowlayout:tagflowlayout:0.2.1'
+		compile 'com.github.hymanme.tagflowlayout:tagflowlayout:0.2.2'
 	}
 ```
 
