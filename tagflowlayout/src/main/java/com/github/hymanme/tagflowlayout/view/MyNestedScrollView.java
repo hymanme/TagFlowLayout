@@ -3,6 +3,8 @@ package com.github.hymanme.tagflowlayout.view;
 import android.content.Context;
 import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.widget.ScrollView;
 
 /**
  * Author   :hymanme
@@ -10,7 +12,7 @@ import android.util.AttributeSet;
  * Create at 2016/2/3 0003
  * Description:
  */
-public class MyNestedScrollView extends NestedScrollView {
+public class MyNestedScrollView extends ScrollView {
 
     public MyNestedScrollView(Context context) {
         super(context);
@@ -30,26 +32,14 @@ public class MyNestedScrollView extends NestedScrollView {
         canScroll = isCan;
     }
 
-//    public boolean dispatchTouchEvent(MotionEvent e) {
-//        switch (e.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                setEnabled(true);
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                if (!canScroll) {
-//                    setEnabled(false);
-//                } else {
-//                    setEnabled(true);
-//                }
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                canScroll = true;
-//                break;
-//            default:
-//                break;
-//        }
-//        return super.dispatchTouchEvent(e);
-//    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (canScroll) {
+            getParent().requestDisallowInterceptTouchEvent(true);
+
+        }
+        return super.dispatchTouchEvent(event);
+    }
 
 //    @Override
 //    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
@@ -62,9 +52,4 @@ public class MyNestedScrollView extends NestedScrollView {
 //        }
 //        super.onScrollChanged(l, t, oldl, oldt);
 //    }
-
-    @Override
-    protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
-        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
-    }
 }
