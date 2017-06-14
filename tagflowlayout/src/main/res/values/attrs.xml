@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TagFlowLayout">
+        <attr name="titleText" format="reference|string" />
+        <attr name="textTitleColor" format="reference|color" />
+        <attr name="titleTextSize" format="dimension" />
+
+        <attr name="backGroundColor" format="reference|color" />
+
+        <attr name="tagsTextSize" format="dimension" />
+        <attr name="tagsTextColor" format="reference|color" />
+        <attr name="tagsBackgroundColor" format="reference|color" />
+        <attr name="tagsBackgroundPressedColor" format="reference|color" />
+        <attr name="tagsBackgroundCorners" format="dimension" />
+        <attr name="tagsHorizontalSpace" format="dimension" />
+        <attr name="tagsVerticalSpace" format="dimension" />
+        <attr name="randomBackground" format="boolean" />
+
+        <attr name="foldHint" format="reference|string" />
+        <attr name="expandHint" format="reference|string" />
+        <attr name="hintTextColor" format="reference|color" />
+        <attr name="hintTextSize" format="dimension" />
+        <attr name="dividerColor" format="reference|color" />
+
+        <attr name="indicateImage" format="reference" />
+        <attr name="minVisibleHeight" format="dimension" />
+        <attr name="maxVisibleHeight" format="dimension" />
+
+        <attr name="animationDuration" format="integer" />
+    </declare-styleable>
+</resources>
