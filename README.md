@@ -1,5 +1,5 @@
 # TagFlowLayout
-
+单选，多选，多行展开缩回，tag高度自定义
 [GIF图演示，请戳我](http://ww2.sinaimg.cn/mw690/005X6W83jw1f7j44gjx2ng308w0dcx6w.gif)
 
 ![tagFlowLayout2](http://ww2.sinaimg.cn/mw690/005X6W83gw1f7itnhdmwjj30c00lcjtd.jpg)
@@ -9,7 +9,7 @@ Add this to your build.gradle:
 
 ```Java
 	dependencies {
-		compile 'com.github.hymanme.tagflowlayout:tagflowlayout:0.2.2'
+		compile 'com.github.hymanme.tagflowlayout:tagflowlayout:0.3.0'
 	}
 ```
 

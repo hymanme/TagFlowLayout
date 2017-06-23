@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         mTagFlowLayout.setItemModel(TagFlowLayout.ITEM_MODEL_SELECT);
         MyTagAdapter tagAdapter = new MyTagAdapter();
         tagAdapter.addAllTags(tagBeans);
+
+        tagAdapter.notifyDataSetChanged();
+
+
         mTagFlowLayout.setTagAdapter(tagAdapter);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
